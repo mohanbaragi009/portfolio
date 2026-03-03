@@ -28,8 +28,7 @@
 
 Hi! I'm **Mohan Baragi**, from **Bengaluru, Karnataka, India** 🇮🇳
 
-- 🎓 Pursuing **B.E. in Computer Science Engineering & Data Science** at **AMC Engineering College** (CGPA: 8.16)
-- 💼 Currently working as a **Teaching Assistant** at **NxtWave Technologies**
+- 🎓 Pursuing **B.E. in Computer Science Engineering & Data Science** at **AMC Engineering College** (CGPA: 8.26)
 - 💻 Passionate about building **scalable web applications** and exploring **AI & new technologies**
 - 🚀 Love participating in **Hackathons** and solving **Coding Problems**
 
