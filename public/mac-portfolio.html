@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohan Baragi — Portfolio</title>
+    <meta name="description"
+        content="Mohan Baragi — Software Developer & Teaching Assistant at NxtWave Technologies. B.E in CSE & Data Science from AMC Engineering College.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --glass-bg: rgba(30, 30, 40, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-blur: saturate(180%) blur(22px);
+            --purple: #c770f0;
+            --purple-light: #d891f5;
+            --accent: #7f5af0;
+            --text-primary: #f0f0f5;
+            --text-secondary: #a0a0b8;
+            --dock-bg: rgba(20, 20, 30, 0.75);
+            --menubar-bg: rgba(15, 15, 22, 0.82);
+            --widget-radius: 18px;
+            --window-radius: 14px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0d14;
+            min-height: 100vh;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* ── WALLPAPER ── */
+        #wallpaper {
+            position: fixed;
+            inset: 0;
+            background: url('/wallpaper.png') center/cover no-repeat;
+            filter: brightness(0.45) saturate(1.2);
+            z-index: 0;
+            transition: filter 0.5s;
+        }
+
+        /* ── MENU BAR ── */
+        #menubar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: var(--menubar-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            z-index: 9999;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        #menubar-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        #menubar-left span {
+            cursor: default;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        #menubar-left span:first-child {
+            font-size: 15px;
+        }
+
+        #menubar-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 12px;
+            opacity: 0.85;
+        }
+
+        #menubar-right span {
+            cursor: default;
+        }
+
+        #clock {
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        /* ── DESKTOP ── */
+        #desktop {
+            position: fixed;
+            top: 30px;
+            left: 0;
+            right: 0;
+            bottom: 72px;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* ── QUICK TIP ── */
+        #quicktip {
+            position: fixed;
+            top: 44px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px 18px;
+            color: var(--text-primary);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 8888;
+            max-width: 440px;
+            animation: fadeInDown 0.4s ease;
+        }
+
+        #quicktip p {
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        #quicktip strong {
+            color: var(--purple-light);
+        }
+
+        .qt-btns {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .qt-btn {
+            padding: 5px 13px;
+            border-radius: 7px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .qt-btn.primary {
+            background: var(--purple);
+            color: #fff;
+        }
+
+        .qt-btn.secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-primary);
+        }
+
+        .qt-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* ── GLASS WIDGET BASE ── */
+        .widget {
+            position: absolute;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--widget-radius);
+            color: var(--text-primary);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .widget:hover {
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .widget-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        /* ── EXPERIENCE WIDGET ── */
+        #w-exp {
+            top: 24px;
+            left: 18px;
+            width: 200px;
+        }
+
+        #w-exp .exp-big {
+            font-size: 60px;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--text-primary);
+            padding: 12px 14px 0;
+        }
+
+        #w-exp .exp-unit {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            padding: 0 14px 4px;
+        }
+
+        #w-exp .exp-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 6px 14px 10px;
+        }
+
+        #w-exp .exp-tag {
+            font-size: 10px;
+            background: rgba(199, 112, 240, 0.15);
+            color: var(--purple-light);
+            padding: 2px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(199, 112, 240, 0.25);
+        }
+
+        #w-exp .exp-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        #w-exp .exp-stat {
+            padding: 10px 14px;
+        }
+
+        #w-exp .exp-stat:first-child {
+            border-right: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        #w-exp .stat-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        #w-exp .stat-val {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        #w-exp .stat-val span {
+            font-size: 13px;
+            color: var(--purple);
+        }
+
+        /* ── OPEN WINDOWS / EXPERIENCE TIMELINE WIDGET ── */
+        #w-timeline {
+            top: 24px;
+            left: 232px;
+            width: 265px;
+        }
+
+        #w-timeline .tl-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background 0.2s;
+        }
+
+        #w-timeline .tl-item:last-child {
+            border-bottom: none;
+        }
+
+        #w-timeline .tl-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        #w-timeline .tl-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #7f5af0, #c770f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+
+        #w-timeline .tl-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        #w-timeline .tl-name {
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #w-timeline .tl-role {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        #w-timeline .tl-badge {
+            font-size: 9px;
+            padding: 2px 7px;
+            border-radius: 5px;
+            background: rgba(127, 90, 240, 0.3);
+            color: #9b8ff7;
+            font-weight: 600;
+            border: 1px solid rgba(127, 90, 240, 0.4);
+            flex-shrink: 0;
+        }
+
+        #w-timeline .tl-meta {
+            font-size: 10px;
+            color: var(--text-secondary);
+            padding: 0 14px 6px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        #w-timeline .tl-meta i {
+            font-size: 9px;
+        }
+
+        #w-timeline .tl-cta {
+            margin: 6px 14px 12px;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background 0.2s;
+        }
+
+        #w-timeline .tl-cta:hover {
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        /* ── TECH STACK WIDGET ── */
+        #w-tech {
+            bottom: 24px;
+            left: 18px;
+            width: 285px;
+        }
+
+        #w-tech .tech-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px 10px;
+        }
+
+        #w-tech .tech-view-all {
+            font-size: 10px;
+            color: var(--purple-light);
+            cursor: pointer;
+        }
+
+        #w-tech .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            padding: 0 10px 10px;
+        }
+
+        #w-tech .tech-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 6px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        #w-tech .tech-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.05);
+        }
+
+        #w-tech .tech-item img,
+        #w-tech .tech-item i {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            font-size: 28px;
+        }
+
+        #w-tech .tech-item span {
+            font-size: 9px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        #w-tech .tech-more {
+            font-size: 10px;
+            color: var(--purple);
+            padding: 6px 14px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ── PROJECTS WIDGET ── */
+        #w-projects {
+            bottom: 24px;
+            left: 315px;
+            width: 265px;
+        }
+
+        #w-projects .proj-card {
+            margin: 0 12px 8px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #w-projects .proj-card:hover {
+            transform: scale(1.02);
+        }
+
+        #w-projects .proj-card-inner {
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        #w-projects .proj-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        #w-projects .proj-title {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        #w-projects .proj-sub {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        #w-projects .proj-tags {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        #w-projects .proj-tag {
+            font-size: 9px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+
+        #w-projects .proj-cta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            padding: 4px 0 0;
+        }
+
+        #w-projects .proj-next {
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 8px 12px;
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        #w-projects .proj-next strong {
+            color: var(--text-primary);
+        }
+
+        /* ── ABOUT / PROFILE PANEL ── */
+        #w-about {
+            position: fixed;
+            top: 30px;
+            right: 0;
+            bottom: 72px;
+            width: 310px;
+            background: rgba(18, 18, 28, 0.82);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-left: 1px solid var(--glass-border);
+            z-index: 500;
+            overflow-y: auto;
+            padding: 20px 18px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        #w-about::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #w-about::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #w-about::-webkit-scrollbar-thumb {
+            background: rgba(199, 112, 240, 0.3);
+            border-radius: 4px;
+        }
+
+        #w-about .about-header {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        #w-about .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        #w-about .profile-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #7f5af0 0%, #c770f0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        #w-about .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #w-about .profile-name {
+            font-size: 20px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        #w-about .profile-emoji {
+            font-size: 18px;
+        }
+
+        #w-about .profile-role {
+            font-size: 11px;
+            color: var(--purple-light);
+            font-weight: 500;
+            margin-top: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .role-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--purple);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        #w-about .bio-text {
+            font-size: 12.5px;
+            line-height: 1.75;
+            color: rgba(240, 240, 245, 0.82);
+        }
+
+        #w-about .location-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        #w-about .location-row i {
+            color: var(--purple);
+            font-size: 11px;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        #w-about .action-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-resume {
+            flex: 1;
+            padding: 9px 12px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: opacity 0.2s, transform 0.15s;
+            text-decoration: none;
+        }
+
+        .btn-resume:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            transition: background 0.2s, transform 0.15s;
+            text-decoration: none;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-1px);
+        }
+
+        .hobbies-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hobby-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .hobby-icon {
+            font-size: 15px;
+        }
+
+        .section-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .quote-box {
+            background: rgba(199, 112, 240, 0.08);
+            border-left: 3px solid var(--purple);
+            border-radius: 0 8px 8px 0;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: rgba(240, 240, 245, 0.75);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .quote-box cite {
+            display: block;
+            margin-top: 5px;
+            font-size: 11px;
+            color: var(--purple-light);
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* ── FLOATING WINDOW (macOS style) ── */
+        .mac-window {
+            position: absolute;
+            background: rgba(22, 22, 32, 0.9);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--window-radius);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+            display: none;
+            z-index: 2000;
+            overflow: hidden;
+            resize: both;
+            min-width: 400px;
+            min-height: 300px;
+        }
+
+        .mac-window.open {
+            display: flex;
+            flex-direction: column;
+            animation: windowOpen 0.25s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .mac-titlebar {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            cursor: grab;
+            flex-shrink: 0;
+        }
+
+        .mac-titlebar:active {
+            cursor: grabbing;
+        }
+
+        .traffic-lights {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .tl {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: filter 0.15s;
+        }
+
+        .tl.close {
+            background: #ff5f57;
+        }
+
+        .tl.close:hover {
+            filter: brightness(1.2);
+        }
+
+        .tl.min {
+            background: #febc2e;
+        }
+
+        .tl.min:hover {
+            filter: brightness(1.2);
+        }
+
+        .tl.max {
+            background: #28c840;
+        }
+
+        .tl.max:hover {
+            filter: brightness(1.2);
+        }
+
+        .win-title {
+            flex: 1;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .win-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            flex-shrink: 0;
+        }
+
+        .win-toolbar-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .win-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .win-body::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .win-body::-webkit-scrollbar-thumb {
+            background: rgba(199, 112, 240, 0.3);
+            border-radius: 4px;
+        }
+
+        /* PROJECT GRID */
+        .proj-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .proj-card-win {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+        }
+
+        .proj-card-win:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .proj-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .proj-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .proj-card-sub {
+            font-size: 11px;
+            color: var(--purple-light);
+            margin-bottom: 8px;
+        }
+
+        .proj-card-desc {
+            font-size: 11px;
+            line-height: 1.6;
+            color: rgba(240, 240, 245, 0.7);
+        }
+
+        .proj-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 10px;
+        }
+
+        .proj-tag-win {
+            font-size: 9px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: rgba(127, 90, 240, 0.2);
+            color: #9b8ff7;
+            border: 1px solid rgba(127, 90, 240, 0.3);
+        }
+
+        .proj-card-links {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .proj-link {
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .proj-link.gh {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .proj-link.demo {
+            background: var(--purple);
+            color: #fff;
+        }
+
+        .proj-link:hover {
+            opacity: 0.8;
+        }
+
+        /* SKILLS GRID */
+        .skills-section {
+            margin-bottom: 20px;
+        }
+
+        .skills-section h3 {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: default;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .skill-chip:hover {
+            background: rgba(199, 112, 240, 0.15);
+            border-color: rgba(199, 112, 240, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .skill-chip img,
+        .skill-chip i {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            font-size: 14px;
+        }
+
+        /* EXPERIENCE TIMELINE WINDOW */
+        .exp-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .exp-item {
+            display: flex;
+            gap: 14px;
+        }
+
+        .exp-line-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .exp-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--purple);
+            border: 2px solid var(--glass-border);
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .exp-line {
+            flex: 1;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--purple), transparent);
+            margin-top: 4px;
+        }
+
+        .exp-content {
+            flex: 1;
+            padding-bottom: 20px;
+        }
+
+        .exp-company {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .exp-role {
+            font-size: 12px;
+            color: var(--purple-light);
+            margin: 3px 0;
+        }
+
+        .exp-period {
+            font-size: 11px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .exp-desc {
+            font-size: 12px;
+            line-height: 1.7;
+            color: rgba(240, 240, 245, 0.75);
+        }
+
+        .exp-tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .exp-tag-win {
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            background: rgba(199, 112, 240, 0.1);
+            color: var(--purple-light);
+            border: 1px solid rgba(199, 112, 240, 0.25);
+        }
+
+        /* ── DOCK ── */
+        #dock {
+            position: fixed;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            background: var(--dock-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 22px;
+            padding: 8px 16px;
+            z-index: 9999;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .dock-separator {
+            width: 1px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 0 4px;
+            align-self: center;
+        }
+
+        .dock-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            transition: transform 0.15s;
+            position: relative;
+        }
+
+        .dock-item:hover .dock-icon {
+            transform: scale(1.35) translateY(-8px);
+        }
+
+        .dock-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1.5);
+        }
+
+        .dock-label {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            background: rgba(20, 20, 30, 0.9);
+            color: var(--text-primary);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s;
+        }
+
+        .dock-item:hover .dock-label {
+            opacity: 1;
+        }
+
+        .dock-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            position: absolute;
+            bottom: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+
+        .dock-item.active .dock-dot {
+            display: block;
+        }
+
+        /* dock icon colors */
+        .di-finder {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .di-mail {
+            background: linear-gradient(135deg, #4facfe, #0072ff);
+        }
+
+        .di-about {
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+        }
+
+        .di-projects {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .di-skills {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .di-exp {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        .di-github {
+            background: linear-gradient(135deg, #434343, #000);
+        }
+
+        .di-linkedin {
+            background: linear-gradient(135deg, #0077b5, #005885);
+        }
+
+        .di-resume {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+        }
+
+        .di-settings {
+            background: linear-gradient(135deg, #8e9eab, #699);
+        }
+
+        /* ── TALK TO ME FAB ── */
+        #fab {
+            position: fixed;
+            bottom: 88px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9000;
+            box-shadow: 0 4px 20px rgba(127, 90, 240, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        #fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(127, 90, 240, 0.65);
+        }
+
+        #fab-label {
+            position: fixed;
+            bottom: 148px;
+            right: 14px;
+            background: rgba(20, 20, 30, 0.9);
+            color: var(--text-primary);
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 5px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+
+        #fab:hover~#fab-label {
+            opacity: 1;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        @keyframes windowOpen {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        /* ── MOBILE RESPONSIVE ── */
+        @media(max-width:768px) {
+            #w-about {
+                position: fixed;
+                top: auto;
+                right: 0;
+                left: 0;
+                bottom: 72px;
+                width: 100%;
+                height: 55vh;
+                border-left: none;
+                border-top: 1px solid var(--glass-border);
+                border-radius: 20px 20px 0 0;
+                overflow-y: auto;
+                z-index: 600;
+                transform: translateY(100%);
+                transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
+            }
+
+            #w-about.mobile-open {
+                transform: translateY(0);
+            }
+
+            #w-exp {
+                top: 14px;
+                left: 10px;
+                width: 165px;
+            }
+
+            #w-timeline {
+                display: none;
+            }
+
+            #w-tech {
+                bottom: auto;
+                top: auto;
+                left: 10px;
+                width: 220px;
+                display: none;
+            }
+
+            #w-projects {
+                bottom: auto;
+                left: auto;
+                right: 10px;
+                width: 200px;
+                display: none;
+            }
+
+            .mac-window {
+                min-width: 90vw;
+                left: 5vw !important;
+                top: 50px !important;
+            }
+
+            #desktop {
+                right: 0;
+            }
+
+            #dock {
+                gap: 4px;
+                padding: 6px 10px;
+            }
+
+            .dock-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 18px;
+            }
+        }
+
+        @media(max-width:480px) {
+            #dock {
+                gap: 2px;
+                padding: 6px 8px;
+            }
+
+            .dock-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 16px;
+            }
+
+            #w-exp {
+                width: 155px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Wallpaper -->
+    <div id="wallpaper"></div>
+
+    <!-- Menu Bar -->
+    <div id="menubar">
+        <div id="menubar-left">
+            <span>&#63743;</span>
+            <span>Finder</span>
+            <span>File</span>
+            <span>Edit</span>
+            <span>View</span>
+            <span>Window</span>
+        </div>
+        <div id="menubar-right">
+            <i class="fas fa-wifi"></i>
+            <i class="fas fa-battery-three-quarters"></i>
+            <i class="fas fa-volume-low"></i>
+            <span id="clock"></span>
+        </div>
+    </div>
+
+    <!-- Desktop -->
+    <div id="desktop">
+
+        <!-- Quick Tip -->
+        <div id="quicktip">
+            <div>
+                <strong>Quick tip</strong>
+                <p>Click dock icons to open sections. Drag windows to reposition.<br>The menu bar is decorative—your
+                    content opens in windows.</p>
+            </div>
+            <div class="qt-btns">
+                <button class="qt-btn primary" onclick="document.getElementById('quicktip').remove()">Got it</button>
+            </div>
+        </div>
+
+        <!-- Experience Widget -->
+        <div class="widget" id="w-exp">
+            <div class="widget-header"><span class="widget-title">Experience</span></div>
+            <div class="exp-big">1</div>
+            <div class="exp-unit">Year+</div>
+            <div class="exp-tags">
+                <span class="exp-tag">Software Dev</span>
+                <span class="exp-tag">Teaching</span>
+                <span class="exp-tag">Full Stack</span>
+            </div>
+            <div class="exp-stats">
+                <div class="exp-stat">
+                    <div class="stat-label">Companies</div>
+                    <div class="stat-val">1</div>
+                </div>
+                <div class="exp-stat">
+                    <div class="stat-label">Projects</div>
+                    <div class="stat-val">4<span>+</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline / Open Windows Widget -->
+        <div class="widget" id="w-timeline">
+            <div class="widget-header"><span class="widget-title">Open windows</span></div>
+            <div class="tl-item" onclick="openWindow('win-exp')">
+                <div class="tl-icon">🎓</div>
+                <div class="tl-info">
+                    <div class="tl-name">NxtWave Technologies</div>
+                    <div class="tl-role">Teaching Assistant</div>
+                </div>
+                <span class="tl-badge">Current</span>
+            </div>
+            <div class="tl-meta"><i class="fas fa-calendar-alt"></i> Sep 2024 – Present &nbsp;|&nbsp; <i
+                    class="fas fa-location-dot"></i> Remote</div>
+            <div class="tl-cta" onclick="openWindow('win-exp')">
+                <span>📋 Click to open full timeline</span>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </div>
+
+        <!-- Tech Stack Widget -->
+        <div class="widget" id="w-tech">
+            <div class="tech-header">
+                <span class="widget-title">⚡ Tech Stack</span>
+                <span class="tech-view-all" onclick="openWindow('win-skills')">View All →</span>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-item"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                        alt="Python"><span>Python</span></div>
+                <div class="tech-item"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                        alt="React"><span>React</span></div>
+                <div class="tech-item"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                        alt="JS"><span>JavaScript</span></div>
+                <div class="tech-item"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                        alt="Node"><span>Node.js</span></div>
+                <div class="tech-item"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                        alt="MongoDB"><span>MongoDB</span></div>
+                <div class="tech-item"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+                        alt="Git"><span>Git</span></div>
+            </div>
+            <div class="tech-more" onclick="openWindow('win-skills')"><i class="fas fa-plus"></i> +8 more technologies
+            </div>
+        </div>
+
+        <!-- Projects Widget -->
+        <div class="widget" id="w-projects">
+            <div class="widget-header"><span class="widget-title">📁 Projects</span></div>
+            <div class="proj-card" onclick="openWindow('win-projects')">
+                <div class="proj-card-inner">
+                    <div class="proj-badge">🍔</div>
+                    <div class="proj-title">Food Munch</div>
+                    <div class="proj-sub">Responsive food website</div>
+                    <div class="proj-tags">
+                        <span class="proj-tag">HTML</span>
+                        <span class="proj-tag">CSS</span>
+                        <span class="proj-tag">Bootstrap</span>
+                    </div>
+                    <div class="proj-cta"><span>Tap to open Projects</span><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+            <div class="proj-next">
+                <strong>Up next</strong><br>Wikipedia Search App • Crypto Tracker
+            </div>
+        </div>
+
+        <!-- ───────── FLOATING WINDOWS ───────── -->
+
+        <!-- Projects Window -->
+        <div class="mac-window" id="win-projects" style="top:60px;left:120px;width:680px;height:520px;">
+            <div class="mac-titlebar" id="tb-projects">
+                <div class="traffic-lights">
+                    <div class="tl close" onclick="closeWindow('win-projects')"></div>
+                    <div class="tl min" onclick="minimizeWindow('win-projects')"></div>
+                    <div class="tl max"></div>
+                </div>
+                <span class="win-title">Projects</span>
+                <div style="width:46px;"></div>
+            </div>
+            <div class="win-toolbar">
+                <div class="win-toolbar-btn"><i class="fas fa-chevron-left"></i></div>
+                <div class="win-toolbar-btn"><i class="fas fa-chevron-right"></i></div>
+                <div class="win-toolbar-btn"><i class="fas fa-share-from-square"></i></div>
+            </div>
+            <div class="win-body">
+                <h2 style="font-size:18px;font-weight:800;margin-bottom:6px;">🚀 Featured Projects</h2>
+                <p style="font-size:12px;color:var(--text-secondary);margin-bottom:18px;">A selection of work I've built
+                    and shipped.</p>
+                <div class="proj-grid">
+                    <div class="proj-card-win">
+                        <div class="proj-icon">🍔</div>
+                        <div class="proj-card-title">Food Munch</div>
+                        <div class="proj-card-sub">Responsive Food Website</div>
+                        <div class="proj-card-desc">Fully responsive website with a comprehensive list of food items,
+                            enhanced UX with Bootstrap components and product videos for customer experience.</div>
+                        <div class="proj-card-tags"><span class="proj-tag-win">HTML</span><span
+                                class="proj-tag-win">CSS</span><span class="proj-tag-win">Bootstrap</span></div>
+                        <div class="proj-card-links">
+                            <a href="https://github.com/mohanbaragi009/Food-munch" target="_blank"
+                                class="proj-link gh"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="https://mohanbaragi009.github.io/Food-munch/" target="_blank"
+                                class="proj-link demo">Live Demo</a>
+                        </div>
+                    </div>
+                    <div class="proj-card-win">
+                        <div class="proj-icon">🔍</div>
+                        <div class="proj-card-title">Wikipedia Search App</div>
+                        <div class="proj-card-sub">Custom Search Application</div>
+                        <div class="proj-card-desc">Custom search app fetching curated results from Wikipedia with async
+                            fetch API calls and responsive HTML/CSS Bootstrap styling.</div>
+                        <div class="proj-card-tags"><span class="proj-tag-win">JavaScript</span><span
+                                class="proj-tag-win">REST API</span><span class="proj-tag-win">Bootstrap</span></div>
+                        <div class="proj-card-links">
+                            <a href="https://github.com/mohanbaragi009" target="_blank" class="proj-link gh"><i
+                                    class="fab fa-github"></i> GitHub</a>
+                            <a href="https://mohanwikipedia.ccbp.tech" target="_blank" class="proj-link demo">Live
+                                Demo</a>
+                        </div>
+                    </div>
+                    <div class="proj-card-win">
+                        <div class="proj-icon">💰</div>
+                        <div class="proj-card-title">Cryptocurrency Tracker</div>
+                        <div class="proj-card-sub">Live Crypto Price Tracker</div>
+                        <div class="proj-card-desc">Platform tracking live crypto market prices with responsive tables
+                            using React and Bootstrap, integrated with REST API for real-time data.</div>
+                        <div class="proj-card-tags"><span class="proj-tag-win">React</span><span
+                                class="proj-tag-win">Bootstrap</span><span class="proj-tag-win">REST API</span></div>
+                        <div class="proj-card-links">
+                            <a href="https://github.com/mohanbaragi009" target="_blank" class="proj-link gh"><i
+                                    class="fab fa-github"></i> GitHub</a>
+                            <a href="https://mohancrypto.ccbp.tech" target="_blank" class="proj-link demo">Live Demo</a>
+                        </div>
+                    </div>
+                    <div class="proj-card-win">
+                        <div class="proj-icon">🤖</div>
+                        <div class="proj-card-title">Learning Path Generator (MCP)</div>
+                        <div class="proj-card-sub">AI-Powered Learning Tool</div>
+                        <div class="proj-card-desc">Streamlit app generating personalized learning paths using Model
+                            Context Protocol (MCP). Integrates YouTube, Google Drive, and Notion.</div>
+                        <div class="proj-card-tags"><span class="proj-tag-win">Python</span><span
+                                class="proj-tag-win">Streamlit</span><span class="proj-tag-win">MCP</span><span
+                                class="proj-tag-win">Pipedream</span></div>
+                        <div class="proj-card-links">
+                            <a href="https://github.com/mohanbaragi009" target="_blank" class="proj-link gh"><i
+                                    class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Window -->
+        <div class="mac-window" id="win-skills" style="top:60px;left:180px;width:600px;height:480px;">
+            <div class="mac-titlebar" id="tb-skills">
+                <div class="traffic-lights">
+                    <div class="tl close" onclick="closeWindow('win-skills')"></div>
+                    <div class="tl min" onclick="minimizeWindow('win-skills')"></div>
+                    <div class="tl max"></div>
+                </div>
+                <span class="win-title">Skills</span>
+                <div style="width:46px;"></div>
+            </div>
+            <div class="win-body">
+                <div class="skills-section">
+                    <h3>💻 Languages</h3>
+                    <div class="skills-grid">
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">Python
+                        </div>
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">JavaScript
+                        </div>
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg">HTML5
+                        </div>
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg">CSS3
+                        </div>
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg">C++
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-section">
+                    <h3>🛠 Frameworks & Libraries</h3>
+                    <div class="skills-grid">
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">React.js
+                        </div>
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg">Node.js
+                        </div>
+                        <div class="skill-chip"><i class="fab fa-bootstrap"
+                                style="color:#7952b3;font-size:16px;"></i>Bootstrap</div>
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg">Express.js
+                        </div>
+                        <div class="skill-chip" style="filter:invert(1) brightness(2)"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg">Next.js
+                        </div>
+                        <div class="skill-chip"><i class="fas fa-wind"
+                                style="color:#38bdf8;font-size:14px;"></i>Tailwind</div>
+                    </div>
+                </div>
+                <div class="skills-section">
+                    <h3>🗄 Databases & Cloud</h3>
+                    <div class="skills-grid">
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg">MongoDB
+                        </div>
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg">MySQL
+                        </div>
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg">Firebase
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-section">
+                    <h3>🔧 Tools & DevOps</h3>
+                    <div class="skills-grid">
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg">Git</div>
+                        <div class="skill-chip"><i class="fab fa-github" style="font-size:16px;"></i>GitHub</div>
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg">VS
+                            Code</div>
+                        <div class="skill-chip"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg">Postman
+                        </div>
+                        <div class="skill-chip"><i class="fab fa-google"
+                                style="color:#ea4335;font-size:14px;"></i>Google Colab</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience Window -->
+        <div class="mac-window" id="win-exp" style="top:60px;left:140px;width:560px;height:440px;">
+            <div class="mac-titlebar" id="tb-exp">
+                <div class="traffic-lights">
+                    <div class="tl close" onclick="closeWindow('win-exp')"></div>
+                    <div class="tl min" onclick="minimizeWindow('win-exp')"></div>
+                    <div class="tl max"></div>
+                </div>
+                <span class="win-title">Experience</span>
+                <div style="width:46px;"></div>
+            </div>
+            <div class="win-body">
+                <h2 style="font-size:18px;font-weight:800;margin-bottom:20px;">💼 Work Experience</h2>
+                <div class="exp-timeline">
+                    <div class="exp-item">
+                        <div class="exp-line-col">
+                            <div class="exp-dot"></div>
+                            <div class="exp-line"></div>
+                        </div>
+                        <div class="exp-content">
+                            <div class="exp-company">NxtWave Technologies</div>
+                            <div class="exp-role">Teaching Assistant</div>
+                            <div class="exp-period"><i class="fas fa-calendar-alt"></i> Sep 2024 – Present &nbsp;|&nbsp;
+                                <i class="fas fa-location-dot"></i> Remote, India</div>
+                            <div class="exp-desc">
+                                Assisted students in understanding web development concepts and debugging code. Provided
+                                one-on-one guidance on HTML, CSS, JavaScript, React, and Python. Evaluated assignments
+                                and gave structured feedback to learners. Helped students build real-world projects as
+                                part of CCBP curriculum.
+                            </div>
+                            <div class="exp-tags-row">
+                                <span class="exp-tag-win">Teaching</span>
+                                <span class="exp-tag-win">Mentoring</span>
+                                <span class="exp-tag-win">React</span>
+                                <span class="exp-tag-win">Python</span>
+                                <span class="exp-tag-win">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="exp-item">
+                        <div class="exp-line-col">
+                            <div class="exp-dot" style="background:var(--accent);"></div>
+                        </div>
+                        <div class="exp-content">
+                            <div class="exp-company">AMC Engineering College</div>
+                            <div class="exp-role">B.E – Computer Science & Data Science</div>
+                            <div class="exp-period"><i class="fas fa-calendar-alt"></i> 2021 – Present &nbsp;|&nbsp; <i
+                                    class="fas fa-location-dot"></i> Bengaluru, Karnataka</div>
+                            <div class="exp-desc">Pursuing B.E in Computer Science Engineering and Data Science with
+                                CGPA of 8.16. Active participant in hackathons and coding competitions.</div>
+                            <div class="exp-tags-row">
+                                <span class="exp-tag-win">CGPA: 8.16</span>
+                                <span class="exp-tag-win">DSA</span>
+                                <span class="exp-tag-win">Data Science</span>
+                                <span class="exp-tag-win">Web Dev</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /#desktop -->
+
+    <!-- About / Profile Panel -->
+    <div id="w-about">
+        <div class="about-header">About</div>
+        <div class="profile-row">
+            <div class="profile-avatar">👨‍💻</div>
+            <div>
+                <div class="profile-name">Mohan Baragi <span class="profile-emoji">✨</span></div>
+                <div class="profile-role"><span class="role-dot"></span> Teaching Assistant</div>
+            </div>
+        </div>
+        <div class="section-divider"></div>
+        <div class="bio-text">
+            Hi! I'm a passionate Software Developer from Bengaluru, Karnataka. I love transforming ideas into scalable,
+            reliable web applications.<br><br>
+            I specialize in <strong style="color:var(--purple-light)">JavaScript, React, Node.js and Python</strong>.
+            Currently a Teaching Assistant at NxtWave Technologies, guiding students through web development.<br><br>
+            I enjoy solving coding problems, participating in hackathons, and exploring new AI & web technologies.
+        </div>
+        <div class="location-row"><i class="fas fa-location-dot"></i> Bengaluru, Karnataka, India</div>
+        <div class="section-divider"></div>
+        <div class="action-btns">
+            <a class="btn-resume" href="https://drive.google.com/file/d/1mLVVNX1h7xZJnFXLVrX3IhkLzQsmKiYK/view"
+                target="_blank">
+                <i class="fas fa-download"></i> Download Resume
+            </a>
+            <a class="btn-icon" href="https://github.com/mohanbaragi009" target="_blank"><i
+                    class="fab fa-github"></i></a>
+            <a class="btn-icon" href="https://www.linkedin.com/in/mohan-baragi" target="_blank"><i
+                    class="fab fa-linkedin-in" style="color:#0a66c2;"></i></a>
+        </div>
+        <div class="section-divider"></div>
+        <div class="section-label">Interests</div>
+        <div class="hobbies-list">
+            <div class="hobby-item"><span class="hobby-icon">💻</span> Solving Coding Problems</div>
+            <div class="hobby-item"><span class="hobby-icon">🚀</span> Participating in Hackathons</div>
+            <div class="hobby-item"><span class="hobby-icon">🤖</span> Exploring AI & New Technologies</div>
+        </div>
+        <div class="section-divider"></div>
+        <div class="section-label">My Quote</div>
+        <div class="quote-box">
+            "Strive to build things that make a difference!"
+            <cite>— Mohan</cite>
+        </div>
+    </div>
+
+    <!-- Dock -->
+    <div id="dock">
+        <div class="dock-item" onclick="openWindow('win-exp')" title="Experience">
+            <div class="dock-icon di-finder">📁</div>
+            <span class="dock-label">Experience</span>
+            <div class="dock-dot"></div>
+        </div>
+        <div class="dock-item" onclick="openWindow('win-projects')" title="Projects">
+            <div class="dock-icon di-projects">🚀</div>
+            <span class="dock-label">Projects</span>
+            <div class="dock-dot"></div>
+        </div>
+        <div class="dock-item" onclick="openWindow('win-skills')" title="Skills">
+            <div class="dock-icon di-skills">⚡</div>
+            <span class="dock-label">Skills</span>
+            <div class="dock-dot"></div>
+        </div>
+        <div class="dock-separator"></div>
+        <div class="dock-item" onclick="toggleAbout()" title="About Me">
+            <div class="dock-icon di-about">👤</div>
+            <span class="dock-label">About Me</span>
+            <div class="dock-dot"></div>
+        </div>
+        <div class="dock-item" onclick="window.open('https://github.com/mohanbaragi009','_blank')" title="GitHub">
+            <div class="dock-icon di-github"><i class="fab fa-github" style="color:#fff;"></i></div>
+            <span class="dock-label">GitHub</span>
+        </div>
+        <div class="dock-item" onclick="window.open('https://www.linkedin.com/in/mohan-baragi','_blank')"
+            title="LinkedIn">
+            <div class="dock-icon di-linkedin"><i class="fab fa-linkedin-in" style="color:#fff;"></i></div>
+            <span class="dock-label">LinkedIn</span>
+        </div>
+        <div class="dock-item" onclick="window.open('https://leetcode.com/mohanbaragi_009','_blank')" title="LeetCode">
+            <div class="dock-icon" style="background:linear-gradient(135deg,#f89f1b,#ffc800);">🏆</div>
+            <span class="dock-label">LeetCode</span>
+        </div>
+        <div class="dock-item" onclick="window.open('mailto:mohanbaragi009@gmail.com')" title="Mail">
+            <div class="dock-icon di-mail">✉️</div>
+            <span class="dock-label">Contact</span>
+        </div>
+    </div>
+
+    <!-- FAB -->
+    <div id="fab" onclick="window.open('mailto:mohanbaragi009@gmail.com')">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    <div id="fab-label">Talk to me</div>
+
+    <script>
+        // ── CLOCK ──
+        function updateClock() {
+            const now = new Date();
+            const d = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][now.getDay()];
+            const m = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][now.getMonth()];
+            const day = now.getDate();
+            let h = now.getHours(), mm = String(now.getMinutes()).padStart(2, '0');
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12 || 12;
+            document.getElementById('clock').textContent = `${d} ${m} ${day}  ${h}:${mm} ${ampm}`;
+        }
+        updateClock(); setInterval(updateClock, 1000);
+
+        // ── WINDOWS ──
+        let zCounter = 2001;
+        function openWindow(id) {
+            const w = document.getElementById(id);
+            if (!w) return;
+            w.classList.add('open');
+            w.style.zIndex = ++zCounter;
+            // mark dock item active
+            markDockActive(id);
+        }
+        function closeWindow(id) {
+            const w = document.getElementById(id);
+            if (w) { w.classList.remove('open'); w.style.animation = 'none'; }
+            unmarkDockActive(id);
+        }
+        function minimizeWindow(id) { closeWindow(id); }
+        function markDockActive(id) { }
+        function unmarkDockActive(id) { }
+
+        // ── DRAGGABLE WINDOWS ──
+        document.querySelectorAll('.mac-titlebar').forEach(bar => {
+            const win = bar.closest('.mac-window');
+            let dragging = false, ox = 0, oy = 0, wx = 0, wy = 0;
+            bar.addEventListener('mousedown', e => {
+                if (e.target.classList.contains('tl')) return;
+                dragging = true;
+                const rect = win.getBoundingClientRect();
+                ox = e.clientX - rect.left; oy = e.clientY - rect.top;
+                win.style.zIndex = ++zCounter;
+                e.preventDefault();
+            });
+            document.addEventListener('mousemove', e => {
+                if (!dragging) return;
+                let nx = e.clientX - ox, ny = e.clientY - oy;
+                nx = Math.max(0, Math.min(nx, window.innerWidth - win.offsetWidth));
+                ny = Math.max(30, Math.min(ny, window.innerHeight - 72 - win.offsetHeight));
+                win.style.left = nx + 'px'; win.style.top = ny + 'px';
+            });
+            document.addEventListener('mouseup', () => { dragging = false; });
+        });
+
+        // ── ABOUT PANEL TOGGLE (mobile) ──
+        const aboutPanel = document.getElementById('w-about');
+        function toggleAbout() {
+            if (window.innerWidth <= 768) {
+                aboutPanel.classList.toggle('mobile-open');
+            }
+        }
+
+        // ── RESPONSIVE: reflow widgets ──
+        function reflowWidgets() {
+            const isMobile = window.innerWidth <= 768;
+            ['w-timeline', 'w-tech', 'w-projects'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = isMobile ? 'none' : '';
+            });
+        }
+        reflowWidgets();
+        window.addEventListener('resize', reflowWidgets);
+    </script>
+</body>
+
+</html>

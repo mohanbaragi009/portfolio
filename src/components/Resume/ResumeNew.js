@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Particle from "../Particle";
-import pdf from "../../Assets/../Assets/Soumyajit_Behera.pdf";
 import { AiOutlineDownload } from "react-icons/ai";
-import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+
+const RESUME_DRIVE_LINK =
+  "https://drive.google.com/file/d/18IyoycDNoG_NLUBLJSd08v1hRz-GQ5JL/view?usp=drivesdk";
+
+const RESUME_EMBED_LINK =
+  "https://drive.google.com/file/d/18IyoycDNoG_NLUBLJSd08v1hRz-GQ5JL/preview";
 
 function ResumeNew() {
   const [width, setWidth] = useState(1200);
@@ -22,8 +24,9 @@ function ResumeNew() {
         <Row style={{ justifyContent: "center", position: "relative" }}>
           <Button
             variant="primary"
-            href={pdf}
+            href={RESUME_DRIVE_LINK}
             target="_blank"
+            rel="noopener noreferrer"
             style={{ maxWidth: "250px" }}
           >
             <AiOutlineDownload />
@@ -31,17 +34,36 @@ function ResumeNew() {
           </Button>
         </Row>
 
-        <Row className="resume">
-          <Document file={pdf} className="d-flex justify-content-center">
-            <Page pageNumber={1} scale={width > 786 ? 1.7 : 0.6} />
-          </Document>
+        <Row
+          className="resume"
+          style={{ justifyContent: "center", marginTop: "20px" }}
+        >
+          <iframe
+            src={RESUME_EMBED_LINK}
+            title="Mohan Baragi Resume"
+            width={width > 786 ? "900px" : "100%"}
+            height={width > 786 ? "1130px" : "500px"}
+            allow="autoplay"
+            style={{
+              border: "none",
+              borderRadius: "8px",
+              boxShadow: "0 0 30px rgba(200, 137, 230, 0.3)",
+            }}
+          />
         </Row>
 
-        <Row style={{ justifyContent: "center", position: "relative" }}>
+        <Row
+          style={{
+            justifyContent: "center",
+            position: "relative",
+            marginTop: "20px",
+          }}
+        >
           <Button
             variant="primary"
-            href={pdf}
+            href={RESUME_DRIVE_LINK}
             target="_blank"
+            rel="noopener noreferrer"
             style={{ maxWidth: "250px" }}
           >
             <AiOutlineDownload />
